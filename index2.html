@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>ESTUDO DIRECIONADO · HTML, CSS, Matemática Computacional, IHC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* (mesmos estilos anteriores mantidos, sem alterações) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(145deg, #0b1120 0%, #111827 100%);
+            font-family: 'Inter', sans-serif;
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 1.5rem;
+        }
+        .app {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .hero {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding: 2rem 1rem;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            border: 1px solid rgba(59,130,246,0.3);
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #a855f7, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .hero h1 i {
+            margin-right: 12px;
+            color: #60a5fa;
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+        }
+        .hero p {
+            color: #94a3b8;
+            margin-top: 8px;
+            font-size: 1.1rem;
+        }
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 3rem;
+        }
+        .topic-card {
+            background: #1e293b;
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #334155;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            outline: none;
+        }
+        .topic-card:hover,
+        .topic-card:focus-visible {
+            transform: translateY(-6px);
+            border-color: #3b82f6;
+            background: #2d3a5e;
+        }
+        .topic-card:focus-visible {
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.5);
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #3b82f6;
+            padding-bottom: 10px;
+        }
+        .card-header i {
+            font-size: 2.5rem;
+            color: #3b82f6;
+        }
+        .card-header h3 {
+            font-size: 1.6rem;
+        }
+        .info-preview {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+        .info-preview ul {
+            margin: 0.5rem 0 0 1.2rem;
+            padding: 0;
+            list-style-type: disc;
+        }
+        .info-preview li {
+            margin-bottom: 0.3rem;
+        }
+        .info-preview code {
+            background: #0f172a;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            color: #facc15;
+            font-size: 0.8rem;
+        }
+        .badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .badge {
+            background: #0f172a;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #94a3b8;
+        }
+        .topic-card .btn-action {
+            background: #3b82f6;
+            border: none;
+            padding: 12px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 10px;
+            transition: 0.2s;
+            font-size: 0.95rem;
+            cursor: pointer;
+            pointer-events: none;
+        }
+        .topic-card:hover .btn-action {
+            background: #2563eb;
+        }
+        .page-container {
+            background: #0f172a;
+            border-radius: 2rem;
+            padding: 2rem;
+            margin-top: 1.5rem;
+            border: 1px solid #334155;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .page-container.active-page {
+            display: block;
+        }
+        .hidden {
+            display: none !important;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 0.8rem;
+        }
+        .back-btn {
+            background: #334155;
+            border: none;
+            padding: 0.6rem 1.4rem;
+            border-radius: 40px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.95rem;
+        }
+        .back-btn:hover {
+            background: #3b82f6;
+        }
+        .content-section {
+            line-height: 1.6;
+        }
+        .content-section h2 {
+            color: #60a5fa;
+            margin: 1.8rem 0 1rem;
+            border-left: 4px solid #3b82f6;
+            padding-left: 1rem;
+        }
+        .content-section h3 {
+            color: #a78bfa;
+            margin: 1.5rem 0 0.8rem;
+        }
+        pre {
+            background: #0b1120;
+            padding: 1.2rem;
+            border-radius: 1rem;
+            overflow-x: auto;
+            margin: 1.2rem 0;
+            border-left: 4px solid #3b82f6;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        code {
+            background: #1e293b;
+            padding: 2px 8px;
+            border-radius: 12px;
+            color: #facc15;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: #1e293b;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #334155;
+        }
+        th {
+            background: #2d3a5e;
+            color: #e2e8f0;
+            font-weight: 600;
+        }
+        ul, ol {
+            padding-left: 2rem;
+            margin: 1rem 0;
+        }
+        li {
+            margin: 0.4rem 0;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        @media (max-width: 700px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 1.8rem; }
+        }
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #5b6e8c;
+            font-size: 0.8rem;
+        }
+        .highlight-box {
+            background: #1e293b;
+            padding: 1.2rem;
+            border-radius: 1rem;
+            border: 1px dashed #3b82f6;
+        }
+        /* Estilo para exercícios interativos */
+        .quiz-item {
+            background: #1e293b;
+            border-radius: 1rem;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .quiz-question {
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: #cbd5e1;
+        }
+        .quiz-options label {
+            display: block;
+            margin: 0.5rem 0;
+            cursor: pointer;
+        }
+        .quiz-feedback {
+            margin-top: 0.8rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .correct-feedback {
+            background: #14532d;
+            color: #86efac;
+            border-left: 4px solid #22c55e;
+        }
+        .wrong-feedback {
+            background: #7f1d1d;
+            color: #fca5a5;
+            border-left: 4px solid #ef4444;
+        }
+        .btn-check {
+            background: #3b82f6;
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            margin-top: 0.8rem;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .btn-check:hover {
+            background: #2563eb;
+        }
+        .container-demo {
+            container-type: inline-size;
+            border: 2px dashed #3b82f6;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+        }
+        .container-child {
+            background: #2d3a5e;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        @container (min-width: 500px) {
+            .container-child {
+                background: #3b82f6;
+                color: black;
+                font-weight: bold;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+    <div class="hero">
+        <h1><i class="fas fa-microchip"></i> HTML · CSS · Matemática Computacional · IHC</h1>
+        <p>Conteúdo expandido com exemplos práticos, fundamentos teóricos e melhores práticas do mercado.</p>
+    </div>
+
+    <!-- PÁGINA PRINCIPAL COM CARDS ENRIQUECIDOS -->
+    <div id="mainPage">
+        <div class="button-grid">
+            <!-- CARD HTML -->
+            <div class="topic-card" data-page="html" tabindex="0" role="button" aria-label="Acessar conteúdo completo de HTML5">
+                <div class="card-header">
+                    <i class="fab fa-html5"></i>
+                    <h3>HTML5</h3>
+                </div>
+                <div class="info-preview">
+                    <strong>📄 Estrutura semântica</strong>
+                    <ul>
+                        <li><code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;section&gt;</code></li>
+                        <li>Melhora SEO e acessibilidade</li>
+                    </ul>
+                    <strong>🧩 Formulários</strong>
+                    <ul>
+                        <li>Novos tipos: <code>email</code>, <code>tel</code>, <code>date</code>, <code>color</code></li>
+                        <li>Validação nativa com <code>required</code>, <code>pattern</code></li>
+                        <li><code>&lt;datalist&gt;</code> para sugestões</li>
+                    </ul>
+                    <strong>♿ Acessibilidade</strong>
+                    <ul>
+                        <li>Atributos ARIA: <code>role</code>, <code>aria-label</code>, <code>aria-live</code></li>
+                        <li>Navegação por teclado com <code>tabindex</code></li>
+                    </ul>
+                </div>
+                <div class="badge-list">
+                    <span class="badge">Semântica</span>
+                    <span class="badge">SEO</span>
+                    <span class="badge">ARIA</span>
+                </div>
+                <div class="btn-action">🔍 Acessar conteúdo completo →</div>
+            </div>
+
+            <!-- CARD CSS -->
+            <div class="topic-card" data-page="css" tabindex="0" role="button" aria-label="Acessar conteúdo completo de CSS3">
+                <div class="card-header">
+                    <i class="fab fa-css3-alt"></i>
+                    <h3>CSS3</h3>
+                </div>
+                <div class="info-preview">
+                    <strong>🎯 Seletores avançados</strong>
+                    <ul>
+                        <li><code>:nth-child()</code>, <code>:not()</code>, <code>:is()</code></li>
+                        <li>Pseudo-elementos <code>::before</code>, <code>::after</code></li>
+                    </ul>
+                    <strong>📐 Layouts modernos</strong>
+                    <ul>
+                        <li><strong>Flexbox:</strong> <code>display: flex</code>, <code>gap</code>, <code>align-items</code></li>
+                        <li><strong>Grid:</strong> <code>grid-template-columns</code>, <code>fr</code>, <code>minmax</code></li>
+                        <li><strong>Container Queries:</strong> <code>@container</code> (tamanho do pai)</li>
+                    </ul>
+                    <strong>✨ Animações</strong>
+                    <ul>
+                        <li><code>transition</code>, <code>transform</code>, <code>@keyframes</code></li>
+                        <li>Variáveis CSS: <code>--cor-primaria</code></li>
+                    </ul>
+                </div>
+                <div class="badge-list">
+                    <span class="badge">Flexbox</span>
+                    <span class="badge">Grid</span>
+                    <span class="badge">@container</span>
+                </div>
+                <div class="btn-action">🎨 Explorar estilos →</div>
+            </div>
+
+            <!-- CARD MATEMÁTICA COMPUTACIONAL -->
+            <div class="topic-card" data-page="matematica" tabindex="0" role="button" aria-label="Acessar conteúdo completo de Matemática Computacional">
+                <div class="card-header">
+                    <i class="fas fa-square-root-alt"></i>
+                    <h3>Matemática Computacional</h3>
+                </div>
+                <div class="info-preview">
+                    <strong>🧠 Lógica proposicional</strong>
+                    <ul>
+                        <li>Conectivos: ∧ (E), ∨ (OU), ¬ (NÃO), → (implica)</li>
+                        <li>Leis de De Morgan: ¬(p∧q) ≡ ¬p ∨ ¬q</li>
+                    </ul>
+                    <strong>📊 Conjuntos & Grafos</strong>
+                    <ul>
+                        <li>Operações: união, interseção, diferença</li>
+                        <li>Representação: matriz de adjacência, lista</li>
+                        <li>Algoritmos: BFS (fila), DFS (pilha/recursão)</li>
+                    </ul>
+                    <strong>⏱️ Complexidade (Big O)</strong>
+                    <ul>
+                        <li>O(1) – Constante</li>
+                        <li>O(log n) – Busca binária</li>
+                        <li>O(n) – Linear</li>
+                        <li>O(n²) – Bubble Sort</li>
+                    </ul>
+                </div>
+                <div class="badge-list">
+                    <span class="badge">Big O</span>
+                    <span class="badge">Álgebra Booleana</span>
+                    <span class="badge">Recursão</span>
+                </div>
+                <div class="btn-action">📐 Ver fundamentos →</div>
+            </div>
+
+            <!-- CARD IHC -->
+            <div class="topic-card" data-page="ihc" tabindex="0" role="button" aria-label="Acessar conteúdo completo de Interação Humano-Máquina">
+                <div class="card-header">
+                    <i class="fas fa-user-friends"></i>
+                    <h3>IHC</h3>
+                </div>
+                <div class="info-preview">
+                    <strong>📌 Heurísticas de Nielsen</strong>
+                    <ul>
+                        <li>1. Visibilidade do status</li>
+                        <li>2. Correspondência com o mundo real</li>
+                        <li>3. Controle e liberdade (desfazer)</li>
+                        <li>4. Consistência e padrões</li>
+                        <li>5. Prevenção de erros</li>
+                        <li>... (total 10)</li>
+                    </ul>
+                    <strong>📏 Leis de UX</strong>
+                    <ul>
+                        <li><strong>Fitts:</strong> tamanho/distância do alvo</li>
+                        <li><strong>Hick:</strong> tempo de decisão ∝ opções</li>
+                        <li><strong>Jakob:</strong> usuários esperam convenções</li>
+                    </ul>
+                    <strong>🧪 Testes de usabilidade</strong>
+                    <ul>
+                        <li>Think Aloud, SUS (System Usability Scale)</li>
+                        <li>WCAG: Perceptível, Operável, Compreensível, Robusto</li>
+                    </ul>
+                </div>
+                <div class="badge-list">
+                    <span class="badge">UX Design</span>
+                    <span class="badge">Acessibilidade</span>
+                    <span class="badge">SUS</span>
+                </div>
+                <div class="btn-action">🤝 Aprofundar em IHC →</div>
+            </div>
+        </div>
+        <footer>💡 Clique em qualquer card ou pressione Enter/Space para acessar a página completa.</footer>
+    </div>
+
+    <!-- ========== PÁGINAS SECUNDÁRIAS (CONTEÚDO EXPANDIDO) ========== -->
+    
+    <!-- HTML EXPANDIDO -->
+    <div id="htmlPage" class="page-container">
+        <div class="page-header">
+            <h2><i class="fab fa-html5"></i> HTML – Fundamentos, Semântica e Boas Práticas</h2>
+            <button class="back-btn" data-back="main"><i class="fas fa-arrow-left"></i> Voltar ao início</button>
+        </div>
+        <div class="content-section">
+            <p>HTML5 não é apenas marcação, é a espinha dorsal da web semântica e acessível. Dominar suas nuances melhora SEO e a experiência de todos os usuários.</p>
+            
+            <h2>🏷️ Semântica aprofundada</h2>
+            <pre>&lt;body&gt;
+  &lt;header&gt;...&lt;/header&gt;
+  &lt;nav&gt;...&lt;/nav&gt;
+  &lt;main&gt;
+    &lt;article&gt;
+      &lt;h1&gt;Título do artigo&lt;/h1&gt;
+      &lt;section&gt;...&lt;/section&gt;
+      &lt;aside&gt;Informações complementares&lt;/aside&gt;
+    &lt;/article&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;...&lt;/footer&gt;
+&lt;/body&gt;</pre>
+            
+            <h2>📋 Formulários Avançados</h2>
+            <table>
+                <tr><th>Tipo</th><th>Exemplo</th><th>Teclado mobile</th></tr>
+                <tr><td>email</td><td><code>&lt;input type="email"&gt;</code></td><td>Teclado com @</td></tr>
+                <tr><td>tel</td><td><code>&lt;input type="tel"&gt;</code></td><td>Teclado numérico</td></tr>
+                <tr><td>date</td><td><code>&lt;input type="date"&gt;</code></td><td>Seletor de data nativo</td></tr>
+                <tr><td>datalist</td><td><code>&lt;input list="sugestoes"&gt;&lt;datalist id="sugestoes"&gt;...&lt;/datalist&gt;</code></td><td>Sugestões</td></tr>
+            </table>
+            <pre>&lt;form&gt;
+  &lt;label for="email"&gt;E-mail:&lt;/label&gt;
+  &lt;input type="email" id="email" required placeholder="nome@exemplo.com"&gt;
+  &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;</pre>
+            
+            <!-- NOVAS SEÇÕES EXPANDIDAS -->
+            <h2>🔖 Atributos Globais Importantes</h2>
+            <table>
+                <tr><th>Atributo</th><th>Descrição</th><th>Exemplo</th></tr>
+                <tr><td><code>contenteditable</code></td><td>Torna o elemento editável pelo usuário</td><td><code>&lt;div contenteditable="true"&gt;Edite-me&lt;/div&gt;</code></td></tr>
+                <tr><td><code>hidden</code></td><td>Oculta o elemento (sem renderização)</td><td><code>&lt;p hidden&gt;Texto oculto&lt;/p&gt;</code></td></tr>
+                <tr><td><code>data-*</code></td><td>Armazena dados customizados</td><td><code>&lt;div data-id="123"&gt;...&lt;/div&gt;</code></td></tr>
+                <tr><td><code>spellcheck</code></td><td>Habilita verificação ortográfica</td><td><code>&lt;textarea spellcheck="true"&gt;&lt;/textarea&gt;</code></td></tr>
+            </table>
+            
+            <h2>🧩 Elementos Interativos</h2>
+            <pre>&lt;details&gt;
+  &lt;summary&gt;Pergunta frequente?&lt;/summary&gt;
+  &lt;p&gt;Resposta detalhada aqui.&lt;/p&gt;
+&lt;/details&gt;
+
+&lt;dialog id="modal"&gt;
+  &lt;p&gt;Conteúdo do modal&lt;/p&gt;
+  &lt;button onclick="this.closest('dialog').close()"&gt;Fechar&lt;/button&gt;
+&lt;/dialog&gt;
+&lt;button onclick="document.getElementById('modal').showModal()"&gt;Abrir modal&lt;/button&gt;</pre>
+            <div class="highlight-box">
+                <i class="fas fa-lightbulb"></i> <strong>Dica:</strong> O elemento <code>&lt;dialog&gt;</code> com <code>.showModal()</code> já fornece backdrop e bloqueio de interação sem JS adicional!
+            </div>
+            
+            <h2>♿ Acessibilidade com WAI-ARIA</h2>
+            <pre>&lt;button aria-label="Fechar modal" aria-expanded="false"&gt;X&lt;/button&gt;
+&lt;div role="alert" aria-live="assertive"&gt;Mensagem importante!&lt;/div&gt;</pre>
+            
+            <h3>Landmarks ARIA</h3>
+            <ul>
+                <li><code>role="banner"</code> → equivalente a <code>&lt;header&gt;</code></li>
+                <li><code>role="navigation"</code> → equivalente a <code>&lt;nav&gt;</code></li>
+                <li><code>role="main"</code> → equivalente a <code>&lt;main&gt;</code></li>
+                <li><code>role="contentinfo"</code> → equivalente a <code>&lt;footer&gt;</code></li>
+            </ul>
+            
+            <h2>🔍 SEO e Meta Tags</h2>
+            <pre>&lt;meta name="description" content="Guia completo de estudos"&gt;
+&lt;meta property="og:title" content="Estudo Dirigido"&gt;
+&lt;link rel="canonical" href="https://exemplo.com"&gt;</pre>
+            
+            <h2>🖼️ Imagens Responsivas</h2>
+            <pre>&lt;picture&gt;
+  &lt;source media="(min-width: 800px)" srcset="imagem-grande.jpg"&gt;
+  &lt;source media="(min-width: 400px)" srcset="imagem-media.jpg"&gt;
+  &lt;img src="imagem-pequena.jpg" alt="Descrição" loading="lazy"&gt;
+&lt;/picture&gt;</pre>
+            
+            <!-- Quiz interativo HTML -->
+            <div class="quiz-item">
+                <div class="quiz-question">❓ Qual elemento HTML5 é usado para agrupar conteúdo tematicamente relacionado, geralmente com um cabeçalho?</div>
+                <div class="quiz-options">
+                    <label><input type="radio" name="htmlQuiz" value="div"> &lt;div&gt;</label>
+                    <label><input type="radio" name="htmlQuiz" value="section"> &lt;section&gt;</label>
+                    <label><input type="radio" name="htmlQuiz" value="article"> &lt;article&gt;</label>
+                    <label><input type="radio" name="htmlQuiz" value="aside"> &lt;aside&gt;</label>
+                </div>
+                <button class="btn-check" onclick="checkHtmlQuiz()">Verificar resposta</button>
+                <div id="htmlQuizFeedback" class="quiz-feedback"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CSS EXPANDIDO -->
+    <div id="cssPage" class="page-container">
+        <div class="page-header">
+            <h2><i class="fab fa-css3-alt"></i> CSS – Estilização Moderna e Arquitetura</h2>
+            <button class="back-btn" data-back="main"><i class="fas fa-arrow-left"></i> Voltar ao início</button>
+        </div>
+        <div class="content-section">
+            <p>O CSS evoluiu para uma linguagem robusta, capaz de lidar com layouts complexos, animações fluidas e design system.</p>
+            
+            <h2>🎯 Seletores e Pseudo-classes</h2>
+            <pre>/* Pseudo-classe funcional */
+li:nth-child(odd) { background: #1e293b; }
+a:focus-visible { outline: 3px solid #3b82f6; }
+input:invalid { border-color: red; }
+
+/* Pseudo-elementos */
+p::first-letter { font-size: 2em; color: #a855f7; }</pre>
+            
+            <h2>📐 Layout: Flexbox e Grid lado a lado</h2>
+            <div class="grid-2">
+                <div><h3>Flexbox</h3><pre>.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}</pre></div>
+                <div><h3>CSS Grid</h3><pre>.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}</pre></div>
+            </div>
+            
+            <!-- NOVAS SEÇÕES EXPANDIDAS -->
+            <h2>🆕 Container Queries (demonstração ao vivo)</h2>
+            <div class="container-demo">
+                <div class="container-child">
+                    Redimensione a janela do navegador. Quando o container pai tiver largura ≥ 500px, este bloco ficará azul.
+                </div>
+            </div>
+            <pre>@container (min-width: 500px) {
+  .card { ... }
+}</pre>
+            
+            <h2>🎨 Variáveis CSS e Temas</h2>
+            <pre>:root {
+  --cor-primaria: #3b82f6;
+  --espacamento: 1rem;
+}
+
+.dark-theme {
+  --cor-fundo: #0f172a;
+  --cor-texto: #e2e8f0;
+}</pre>
+            
+            <h2>✨ Animações Avançadas</h2>
+            <pre>@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.elemento {
+  animation: slideIn 0.5s ease-out;
+  /* animation-fill-mode: forwards; mantém estado final */
+}</pre>
+            
+            <h3>Propriedades de animação</h3>
+            <ul>
+                <li><code>animation-name</code>, <code>animation-duration</code></li>
+                <li><code>animation-timing-function</code>: ease, linear, cubic-bezier()</li>
+                <li><code>animation-delay</code>, <code>animation-iteration-count</code></li>
+                <li><code>animation-direction</code>: normal, reverse, alternate</li>
+            </ul>
+            
+            <h2>🧱 Metodologia BEM</h2>
+            <pre>.card {}               /* Bloco */
+.card__titulo {}      /* Elemento */
+.card--destaque {}    /* Modificador */</pre>
+            
+            <h2>📏 Unidades Modernas</h2>
+            <table>
+                <tr><th>Unidade</th><th>Descrição</th></tr>
+                <tr><td><code>dvh</code> / <code>svh</code> / <code>lvh</code></td><td>Viewport height dinâmico (considera barras do navegador)</td></tr>
+                <tr><td><code>fr</code></td><td>Fração do espaço disponível no Grid</td></tr>
+                <tr><td><code>clamp()</code></td><td>Define valor mínimo, ideal e máximo</td></tr>
+            </table>
+            <pre>font-size: clamp(1rem, 2.5vw, 1.5rem);</pre>
+            
+            <h2>🔄 CSS Nesting (aninhamento)</h2>
+            <pre>.card {
+  padding: 1rem;
+  & h2 { color: blue; }
+  &:hover { background: #eee; }
+}</pre>
+            
+            <!-- Quiz interativo CSS -->
+            <div class="quiz-item">
+                <div class="quiz-question">❓ Qual propriedade CSS é usada para definir o espaçamento entre os itens em um container Flexbox ou Grid?</div>
+                <div class="quiz-options">
+                    <label><input type="radio" name="cssQuiz" value="margin"> margin</label>
+                    <label><input type="radio" name="cssQuiz" value="gap"> gap</label>
+                    <label><input type="radio" name="cssQuiz" value="padding"> padding</label>
+                    <label><input type="radio" name="cssQuiz" value="space"> space-between</label>
+                </div>
+                <button class="btn-check" onclick="checkCssQuiz()">Verificar resposta</button>
+                <div id="cssQuizFeedback" class="quiz-feedback"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MATEMÁTICA COMPUTACIONAL EXPANDIDA -->
+    <div id="matematicaPage" class="page-container">
+        <div class="page-header">
+            <h2><i class="fas fa-square-root-alt"></i> Matemática Computacional – Lógica, Grafos e Complexidade</h2>
+            <button class="back-btn" data-back="main"><i class="fas fa-arrow-left"></i> Voltar ao início</button>
+        </div>
+        <div class="content-section">
+            <p>A matemática computacional fornece as bases para algoritmos eficientes, raciocínio lógico e modelagem de problemas.</p>
+            
+            <h2>🧠 Lógica Proposicional e Tabelas Verdade</h2>
+            <table>
+                <tr><th>p</th><th>q</th><th>p ∧ q</th><th>p ∨ q</th><th>p → q</th><th>¬p</th></tr>
+                <tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td><td>F</td></tr>
+                <tr><td>V</td><td>F</td><td>F</td><td>V</td><td>F</td><td>F</td></tr>
+                <tr><td>F</td><td>V</td><td>F</td><td>V</td><td>V</td><td>V</td></tr>
+                <tr><td>F</td><td>F</td><td>F</td><td>F</td><td>V</td><td>V</td></tr>
+            </table>
+            <p><strong>Leis de De Morgan:</strong> ¬(p ∧ q) ≡ ¬p ∨ ¬q &nbsp;&nbsp;|&nbsp;&nbsp; ¬(p ∨ q) ≡ ¬p ∧ ¬q</p>
+            
+            <h2>📊 Conjuntos</h2>
+            <pre>A = {1, 2, 3}, B = {3, 4, 5}
+A ∪ B = {1,2,3,4,5}
+A ∩ B = {3}
+A - B = {1,2}
+Produto cartesiano: A × B = {(1,3),(1,4),(1,5),(2,3),...}</pre>
+            
+            <h2>🌐 Teoria dos Grafos</h2>
+            <h3>Representações</h3>
+            <div class="grid-2">
+                <div>
+                    <strong>Matriz de Adjacência</strong>
+                    <pre>   A B C
+A [0 1 0]
+B [1 0 1]
+C [0 1 0]</pre>
+                </div>
+                <div>
+                    <strong>Lista de Adjacência</strong>
+                    <pre>A: B
+B: A, C
+C: B</pre>
+                </div>
+            </div>
+            
+            <h3>Algoritmos de Busca</h3>
+            <ul>
+                <li><strong>BFS (Breadth-First Search):</strong> Usa fila, encontra caminho mais curto em grafos não ponderados.</li>
+                <li><strong>DFS (Depth-First Search):</strong> Usa pilha (ou recursão), útil para detecção de ciclos e ordenação topológica.</li>
+                <li><strong>Dijkstra:</strong> Caminho mais curto com pesos positivos (fila de prioridade).</li>
+            </ul>
+            
+            <!-- NOVAS SEÇÕES -->
+            <h2>⏱️ Complexidade de Algoritmos (Big O)</h2>
+            <table>
+                <tr><th>Notação</th><th>Nome</th><th>Exemplo</th></tr>
+                <tr><td>O(1)</td><td>Constante</td><td>Acesso a array por índice</td></tr>
+                <tr><td>O(log n)</td><td>Logarítmica</td><td>Busca binária</td></tr>
+                <tr><td>O(n)</td><td>Linear</td><td>Percorrer array uma vez</td></tr>
+                <tr><td>O(n log n)</td><td>Linearítmica</td><td>Merge Sort, Quick Sort (médio)</td></tr>
+                <tr><td>O(n²)</td><td>Quadrática</td><td>Bubble Sort, Selection Sort</td></tr>
+                <tr><td>O(2ⁿ)</td><td>Exponencial</td><td>Fibonacci recursivo ingênuo</td></tr>
+                <tr><td>O(n!)</td><td>Fatorial</td><td>Problema do Caixeiro Viajante (força bruta)</td></tr>
+            </table>
+            
+            <h2>🔢 Indução Matemática e Recursão</h2>
+            <p>A indução é usada para provar a corretude de algoritmos recursivos.</p>
+            <pre>function fatorial(n) {
+  if (n <= 1) return 1;        // Caso base
+  return n * fatorial(n - 1);  // Passo indutivo
+}</pre>
+            
+            <h2>🧮 Álgebra Booleana e Circuitos Lógicos</h2>
+            <pre>Portas lógicas: AND, OR, NOT, XOR, NAND, NOR
+Expressões booleanas simplificadas com Mapas de Karnaugh.</pre>
+            
+            <h3>Propriedades</h3>
+            <ul>
+                <li>Idempotência: A + A = A, A · A = A</li>
+                <li>Elemento neutro: A + 0 = A, A · 1 = A</li>
+                <li>Complemento: A + ¬A = 1, A · ¬A = 0</li>
+            </ul>
+            
+            <!-- Quiz interativo Matemática -->
+            <div class="quiz-item">
+                <div class="quiz-question">❓ Qual a complexidade de tempo do algoritmo de busca binária em um array ordenado?</div>
+                <div class="quiz-options">
+                    <label><input type="radio" name="mathQuiz" value="O(1)"> O(1)</label>
+                    <label><input type="radio" name="mathQuiz" value="O(n)"> O(n)</label>
+                    <label><input type="radio" name="mathQuiz" value="O(log n)"> O(log n)</label>
+                    <label><input type="radio" name="mathQuiz" value="O(n²)"> O(n²)</label>
+                </div>
+                <button class="btn-check" onclick="checkMathQuiz()">Verificar resposta</button>
+                <div id="mathQuizFeedback" class="quiz-feedback"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- IHC EXPANDIDO -->
+    <div id="ihcPage" class="page-container">
+        <div class="page-header">
+            <h2><i class="fas fa-user-friends"></i> IHC – Interação Humano-Computador</h2>
+            <button class="back-btn" data-back="main"><i class="fas fa-arrow-left"></i> Voltar ao início</button>
+        </div>
+        <div class="content-section">
+            <p>IHC estuda a interação entre pessoas e computadores, visando criar sistemas usáveis, acessíveis e satisfatórios.</p>
+            
+            <h2>📌 As 10 Heurísticas de Nielsen (com exemplos)</h2>
+            <ol>
+                <li><strong>Visibilidade do status:</strong> Mostrar "Carregando..." ou barra de progresso.</li>
+                <li><strong>Correspondência com o mundo real:</strong> Ícone de lixeira para deletar.</li>
+                <li><strong>Controle e liberdade:</strong> Botão "Desfazer" após excluir.</li>
+                <li><strong>Consistência e padrões:</strong> Links azuis sublinhados.</li>
+                <li><strong>Prevenção de erros:</strong> Confirmar antes de apagar permanentemente.</li>
+                <li><strong>Reconhecimento em vez de memorização:</strong> Menus dropdown visíveis.</li>
+                <li><strong>Flexibilidade e eficiência:</strong> Atalhos de teclado (Ctrl+S).</li>
+                <li><strong>Design estético e minimalista:</strong> Evitar informações irrelevantes.</li>
+                <li><strong>Ajudar a reconhecer/diagnosticar erros:</strong> Mensagens claras como "Senha incorreta".</li>
+                <li><strong>Ajuda e documentação:</strong> FAQ ou tooltips.</li>
+            </ol>
+            
+            <h2>📏 Leis de UX</h2>
+            <table>
+                <tr><th>Lei</th><th>Descrição</th><th>Implicação prática</th></tr>
+                <tr><td>Fitts</td><td>Tempo para alcançar alvo depende da distância e tamanho</td><td>Botões grandes e próximos</td></tr>
+                <tr><td>Hick</td><td>Tempo de decisão aumenta com número de opções</td><td>Simplificar menus, usar agrupamento</td></tr>
+                <tr><td>Jakob</td><td>Usuários passam a maior parte do tempo em outros sites</td><td>Seguir convenções estabelecidas</td></tr>
+                <tr><td>Miller (7±2)</td><td>Capacidade da memória de trabalho é limitada</td><td>Agrupar informações em chunks</td></tr>
+                <tr><td>Parkinson</td><td>Toda tarefa se expande até preencher o tempo disponível</td><td>Definir prazos claros</td></tr>
+            </table>
+            
+            <h2>🧪 Métodos de Avaliação de Usabilidade</h2>
+            <ul>
+                <li><strong>Think Aloud:</strong> Usuário verbaliza pensamentos durante tarefa.</li>
+                <li><strong>Avaliação Heurística:</strong> Especialistas inspecionam interface com base em heurísticas.</li>
+                <li><strong>Teste A/B:</strong> Compara duas versões com usuários reais.</li>
+                <li><strong>SUS (System Usability Scale):</strong> Questionário de 10 itens (escala Likert).</li>
+                <li><strong>Eye Tracking:</strong> Rastreamento ocular para analisar atenção visual.</li>
+            </ul>
+            
+            <h2>♿ Diretrizes WCAG 2.1 (Acessibilidade)</h2>
+            <ul>
+                <li><strong>Perceptível:</strong> Texto alternativo, legendas, contraste mínimo (4.5:1).</li>
+                <li><strong>Operável:</strong> Navegação por teclado, tempo suficiente, evitar flashes.</li>
+                <li><strong>Compreensível:</strong> Idioma claro, navegação consistente, ajuda para erros.</li>
+                <li><strong>Robusto:</strong> Compatível com tecnologias assistivas.</li>
+            </ul>
+            
+            <!-- NOVAS SEÇÕES -->
+            <h2>🎭 Affordance e Signifiers</h2>
+            <ul>
+                <li><strong>Affordance:</strong> O que um objeto "convida" a fazer (ex: botão parece clicável).</li>
+                <li><strong>Signifiers:</strong> Indicadores visuais que comunicam a affordance (ex: sombra, ícone de mão).</li>
+            </ul>
+            
+            <h2>🧠 Carga Cognitiva e Modelos Mentais</h2>
+            <p><strong>Carga cognitiva:</strong> Esforço mental exigido. Interfaces devem reduzir a carga extrínseca.</p>
+            <p><strong>Modelo mental:</strong> Representação que o usuário tem do sistema. Deve-se alinhar o design ao modelo mental do usuário.</p>
+            
+            <h2>📱 Design Responsivo e Mobile First</h2>
+            <ul>
+                <li>Priorizar conteúdo essencial em telas pequenas.</li>
+                <li>Alvos de toque com pelo menos 44x44px.</li>
+                <li>Gestos comuns: deslizar, pinçar.</li>
+            </ul>
+            
+            <!-- Quiz interativo IHC -->
+            <div class="quiz-item">
+                <div class="quiz-question">❓ Qual heurística de Nielsen recomenda fornecer feedback claro e imediato sobre as ações do usuário?</div>
+                <div class="quiz-options">
+                    <label><input type="radio" name="ihcQuiz" value="consistencia"> Consistência e padrões</label>
+                    <label><input type="radio" name="ihcQuiz" value="status"> Visibilidade do status do sistema</label>
+                    <label><input type="radio" name="ihcQuiz" value="controle"> Controle e liberdade do usuário</label>
+                    <label><input type="radio" name="ihcQuiz" value="erros"> Prevenção de erros</label>
+                </div>
+                <button class="btn-check" onclick="checkIhcQuiz()">Verificar resposta</button>
+                <div id="ihcQuizFeedback" class="quiz-feedback"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function(){
+        // Navegação entre páginas
+        const mainPage = document.getElementById('mainPage');
+        const pages = {
+            html: document.getElementById('htmlPage'),
+            css: document.getElementById('cssPage'),
+            matematica: document.getElementById('matematicaPage'),
+            ihc: document.getElementById('ihcPage')
+        };
+        
+        // Função para mostrar uma página específica
+        function showPage(pageId) {
+            // Esconde main e todas as páginas
+            mainPage.classList.add('hidden');
+            Object.values(pages).forEach(p => p.classList.remove('active-page'));
+            
+            if (pageId === 'main') {
+                mainPage.classList.remove('hidden');
+            } else if (pages[pageId]) {
+                pages[pageId].classList.add('active-page');
+                // Scroll suave para o topo da página
+                pages[pageId].scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+        
+        // Event listeners para cards
+        document.querySelectorAll('.topic-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                const page = card.dataset.page;
+                if (page) showPage(page);
+            });
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    const page = card.dataset.page;
+                    if (page) showPage(page);
+                }
+            });
+        });
+        
+        // Event listeners para botões "Voltar"
+        document.querySelectorAll('.back-btn').forEach(btn => {
+            btn.addEventListener('click', () => showPage('main'));
+        });
+        
+        // Funções de quiz (adicionadas no escopo global para os botões)
+        window.checkHtmlQuiz = function() {
+            const selected = document.querySelector('input[name="htmlQuiz"]:checked');
+            const feedback = document.getElementById('htmlQuizFeedback');
+            if (!selected) {
+                feedback.textContent = 'Selecione uma opção.';
+                feedback.className = 'quiz-feedback wrong-feedback';
+                return;
+            }
+            if (selected.value === 'section') {
+                feedback.textContent = '✅ Correto! <section> agrupa conteúdo temático, geralmente com um cabeçalho.';
+                feedback.className = 'quiz-feedback correct-feedback';
+            } else {
+                feedback.textContent = '❌ Incorreto. A resposta correta é <section>.';
+                feedback.className = 'quiz-feedback wrong-feedback';
+            }
+        };
+        
+        window.checkCssQuiz = function() {
+            const selected = document.querySelector('input[name="cssQuiz"]:checked');
+            const feedback = document.getElementById('cssQuizFeedback');
+            if (!selected) {
+                feedback.textContent = 'Selecione uma opção.';
+                feedback.className = 'quiz-feedback wrong-feedback';
+                return;
+            }
+            if (selected.value === 'gap') {
+                feedback.textContent = '✅ Correto! A propriedade "gap" define o espaçamento entre itens em Flexbox e Grid.';
+                feedback.className = 'quiz-feedback correct-feedback';
+            } else {
+                feedback.textContent = '❌ Incorreto. A resposta correta é "gap". Margin adiciona espaço externo.';
+                feedback.className = 'quiz-feedback wrong-feedback';
+            }
+        };
+        
+        window.checkMathQuiz = function() {
+            const selected = document.querySelector('input[name="mathQuiz"]:checked');
+            const feedback = document.getElementById('mathQuizFeedback');
+            if (!selected) {
+                feedback.textContent = 'Selecione uma opção.';
+                feedback.className = 'quiz-feedback wrong-feedback';
+                return;
+            }
+            if (selected.value === 'O(log n)') {
+                feedback.textContent = '✅ Correto! Busca binária reduz o espaço de busca pela metade a cada passo → O(log n).';
+                feedback.className = 'quiz-feedback correct-feedback';
+            } else {
+                feedback.textContent = '❌ Incorreto. Busca binária tem complexidade O(log n).';
+                feedback.className = 'quiz-feedback wrong-feedback';
+            }
+        };
+        
+        window.checkIhcQuiz = function() {
+            const selected = document.querySelector('input[name="ihcQuiz"]:checked');
+            const feedback = document.getElementById('ihcQuizFeedback');
+            if (!selected) {
+                feedback.textContent = 'Selecione uma opção.';
+                feedback.className = 'quiz-feedback wrong-feedback';
+                return;
+            }
+            if (selected.value === 'status') {
+                feedback.textContent = '✅ Correto! "Visibilidade do status do sistema" mantém o usuário informado sobre o que está acontecendo.';
+                feedback.className = 'quiz-feedback correct-feedback';
+            } else {
+                feedback.textContent = '❌ Incorreto. A heurística correta é "Visibilidade do status do sistema".';
+                feedback.className = 'quiz-feedback wrong-feedback';
+            }
+        };
+        
+        // Tecla ESC volta para a página principal se estiver em uma página secundária
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !mainPage.classList.contains('hidden') === false) {
+                // Se main estiver oculta, voltamos para ela
+                const anyActive = Object.values(pages).some(p => p.classList.contains('active-page'));
+                if (anyActive) {
+                    showPage('main');
+                }
+            }
+        });
+        
+        // Inicialização: mostra página principal
+        showPage('main');
+    })();
+</script>
+</body>
+</html>
